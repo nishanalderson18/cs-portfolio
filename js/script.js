@@ -5,6 +5,8 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
     const email = document.getElementById('email').value.trim();
     const message = document.getElementById('message').value.trim();
 
+    console.log('Form data:', { name, email, message }); // Log form data
+
     // Basic validation
     if (!name || !email || !message) {
         document.getElementById('form-message').textContent = 'Please fill out all fields.';
@@ -21,7 +23,7 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
     }
 
     // Send form data to the backend
-    fetch('https://tavernofmoe.onrender.com/send', {
+    fetch('https://https://tavernofmoe.onrender.com/send', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -30,6 +32,7 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
     })
     .then(response => response.json())
     .then(data => {
+        console.log('Backend response:', data); // Log backend response
         if (data.error) {
             document.getElementById('form-message').textContent = data.error;
             document.getElementById('form-message').style.color = 'red';
@@ -40,8 +43,8 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
         }
     })
     .catch(error => {
+        console.error('Fetch error:', error); // Log fetch error
         document.getElementById('form-message').textContent = 'Failed to send message. Please try again.';
         document.getElementById('form-message').style.color = 'red';
-        console.error('Error:', error);
     });
 });
