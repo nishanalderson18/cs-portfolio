@@ -1,64 +1,72 @@
-document.getElementById('contact-form').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent the form from submitting the traditional way
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-    // Get form elements
+    const form = e.target;
+    const formMessage = document.getElementById('form-message');
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const message = document.getElementById('message').value.trim();
-    const formMessage = document.getElementById('form-message');
 
     // Clear previous messages
     formMessage.textContent = '';
     formMessage.style.color = '';
 
-    // Basic validation
+    // Validation
     if (!name || !email || !message) {
         formMessage.textContent = 'Please fill out all fields.';
         formMessage.style.color = 'red';
-        return; // Stop further execution if validation fails
+        return;
     }
 
-    // Name validation: Allow spaces (for first and last names)
-    const namePattern = /^[a-zA-Z\s]+$/; // Allows letters and spaces
+    // Enhanced name validation
+    const namePattern = /^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$/;
     if (!namePattern.test(name)) {
-        formMessage.textContent = 'Please enter a valid name (letters and spaces only).';
+        formMessage.textContent = 'Please enter a valid name (letters only, spaces allowed between names)';
         formMessage.style.color = 'red';
-        return; // Stop further execution if name is invalid
+        console.log('Name validation failed for:', name); // Debug log
+        return;
     }
 
-    // Email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
         formMessage.textContent = 'Please enter a valid email address.';
         formMessage.style.color = 'red';
-        return; // Stop further execution if email is invalid
+        return;
     }
 
-    // If validation passes, submit the form to Formspree
-    const formData = new FormData(e.target); // Create FormData object from the form
-
-    fetch(e.target.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
+    try {
+        const formData = new FormData(form);
+        
+        if (!form.action) {
+            formMessage.textContent = 'Form action URL is missing!';
+            formMessage.style.color = 'red';
+            return;
         }
-    })
-    .then(response => {
+
+        console.log('Submitting form with name:', name); // Debug log
+
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
         if (response.ok) {
-            // Success: Display success message and reset the form
             formMessage.textContent = 'Message sent successfully!';
             formMessage.style.color = 'green';
-            document.getElementById('contact-form').reset(); // Clear the form
+            form.reset();
         } else {
-            // Error: Display error message
-            formMessage.textContent = 'Failed to send message. Please try again.';
+            formMessage.textContent = data.error || 'Failed to send message. Please try again.';
             formMessage.style.color = 'red';
+            console.log('Formspree response:', data); // Debug log
         }
-    })
-    .catch(error => {
-        // Network or other errors
+    } catch (error) {
+        console.error('Error:', error);
         formMessage.textContent = 'An error occurred. Please try again.';
         formMessage.style.color = 'red';
-    });
+    }
 });
