@@ -23,14 +23,17 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
     }
 
     // Send form data to the backend
-    fetch('https://https://tavernofmoe.onrender.com/send', {
+    fetch('https://tavernofmoe.onrender.com/send', { // Fixed URL
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ name, email, message })
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response status:', response.status); // Log status
+        return response.json();
+    })
     .then(data => {
         console.log('Backend response:', data); // Log backend response
         if (data.error) {
