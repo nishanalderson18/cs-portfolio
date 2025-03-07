@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Contact Moe's Tavern">
-    <!-- Security Headers via meta tags -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://cdnjs.cloudflare.com; form-action 'self' https://formspree.io;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
@@ -46,7 +45,7 @@
                     </a>
                 </div>
 
-                <form id="contact-form" action="https://formspree.io/f/mdkendbr" method="POST" novalidate>
+                <form id="contact-form" action="https://formspree.io/f/mdkendbr" method="POST">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required minlength="2" maxlength="50" autocomplete="name" aria-required="true">
                     
