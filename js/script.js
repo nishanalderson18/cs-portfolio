@@ -1,15 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     const formMessage = document.getElementById('form-message');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
 
+    // Dark Mode Toggle
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+        updateDarkModeToggleText(isDarkMode);
+    });
+
+    // Initialize Dark Mode
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+    updateDarkModeToggleText(savedDarkMode);
+
+    // Update Dark Mode Toggle Text
+    function updateDarkModeToggleText(isDarkMode) {
+        const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
+        const toggleText = darkModeToggle.querySelector('.toggle-text');
+        toggleIcon.textContent = isDarkMode ? '☀️' : '🌙';
+        toggleText.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+    }
+
+    // Form Submission
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         // Get form data
-        const name = sanitizeInput(document.getElementById('name').value.trim());
-        const email = sanitizeInput(document.getElementById('email').value.trim());
-        const message = sanitizeInput(document.getElementById('message').value.trim());
-        const honeypot = contactForm.querySelector('[name="_gotcha"]').value;
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
 
         // Reset message
         formMessage.textContent = '';
@@ -17,14 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Client-side validation
         try {
-            // Honeypot check
-            if (honeypot) {
-                console.warn('Possible bot detected');
-                formMessage.textContent = 'Submission blocked due to spam detection.';
-                formMessage.style.color = 'red';
-                return;
-            }
-
             // Basic field presence
             if (!name || !email || !message) {
                 formMessage.textContent = 'Please fill out all required fields.';
@@ -86,16 +102,4 @@ document.addEventListener('DOMContentLoaded', () => {
             contactForm.querySelector('button').disabled = false;
         }
     });
-
-    // Input sanitization function
-    function sanitizeInput(input) {
-        const div = document.createElement('div');
-        div.textContent = input;
-        return div.innerHTML
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#x27;');
-    }
 });
