@@ -23,7 +23,7 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
     }
 
     // Send form data to the backend
-    fetch('https://backend-ai8sezvvj-nishanalderson18s-projects.vercel.app', { // Fixed URL
+    fetch('https://backend-mu-blond-90.vercel.app/send', { // Fixed URL
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
