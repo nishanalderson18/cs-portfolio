@@ -1,53 +1,49 @@
 document.getElementById('contact-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-
-    console.log('Form data:', { name, email, message }); // Log form data
+    const form = e.target;
+    const formData = new FormData(form);
+    const formMessage = document.getElementById('form-message');
 
     // Basic validation
+    const name = formData.get('name').trim();
+    const email = formData.get('email').trim();
+    const message = formData.get('message').trim();
+
     if (!name || !email || !message) {
-        document.getElementById('form-message').textContent = 'Please fill out all fields.';
-        document.getElementById('form-message').style.color = 'red';
+        formMessage.textContent = 'Please fill out all fields.';
+        formMessage.style.color = 'red';
         return;
     }
 
     // Email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-        document.getElementById('form-message').textContent = 'Please enter a valid email address.';
-        document.getElementById('form-message').style.color = 'red';
+        formMessage.textContent = 'Please enter a valid email address.';
+        formMessage.style.color = 'red';
         return;
     }
 
-    // Send form data to the backend
-    fetch('https://backend-mu-blond-90.vercel.app/send', { // Fixed URL
+    // Submit the form to Formspree
+    fetch(form.action, {
         method: 'POST',
+        body: formData,
         headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, email, message })
+            'Accept': 'application/json'
+        }
     })
     .then(response => {
-        console.log('Response status:', response.status); // Log status
-        return response.json();
-    })
-    .then(data => {
-        console.log('Backend response:', data); // Log backend response
-        if (data.error) {
-            document.getElementById('form-message').textContent = data.error;
-            document.getElementById('form-message').style.color = 'red';
+        if (response.ok) {
+            formMessage.textContent = 'Message sent successfully!';
+            formMessage.style.color = 'green';
+            form.reset(); // Clear the form
         } else {
-            document.getElementById('form-message').textContent = data.message;
-            document.getElementById('form-message').style.color = 'green';
-            document.getElementById('contact-form').reset();
+            formMessage.textContent = 'Failed to send message. Please try again.';
+            formMessage.style.color = 'red';
         }
     })
     .catch(error => {
-        console.error('Fetch error:', error); // Log fetch error
-        document.getElementById('form-message').textContent = 'Failed to send message. Please try again.';
-        document.getElementById('form-message').style.color = 'red';
+        formMessage.textContent = 'An error occurred. Please try again.';
+        formMessage.style.color = 'red';
     });
 });
