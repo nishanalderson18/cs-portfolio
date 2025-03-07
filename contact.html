@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Contact Moe's Tavern">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; form-action 'self' https://formspree.io;">
-        <meta http-equiv="X-Content-Type-Options" content="nosniff">
-        <meta http-equiv="X-Frame-Options" content="DENY">
-        <title>Contact - Moe's Tavern</title>
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Contact Me">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; form-action 'self' https://api.netlify.com;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <title>Contact Me</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Font Awesome for LinkedIn and GitHub icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 <body>
     <header>
         <nav>
@@ -34,8 +35,9 @@
         <section class="contact">
             <h2>Contact Me</h2>
             <div class="contact-content">
-                <p>Feel free to reach out to me via email or connect with me on LinkedIn and GitHub.</p>
-        
+                <p>Feel free to reach out to me!</p>
+
+                <!-- Social Links -->
                 <div class="social-links">
                     <a href="https://www.linkedin.com/in/mohammad-s-7a3934236/" target="_blank" rel="noopener noreferrer" class="social-link linkedin">
                         <i class="fab fa-linkedin"></i>
@@ -44,22 +46,31 @@
                         <i class="fab fa-github"></i>
                     </a>
                 </div>
-        
-                <!-- Ensure only one form exists -->
-                <form id="contact-form" action="https://formspree.io/f/mdkendbr" method="POST">
+
+                <!-- Netlify Form -->
+                <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+                    <!-- Name Field -->
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required minlength="2" maxlength="50" autocomplete="name" aria-required="true">
-                    
+
+                    <!-- Email Field -->
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required autocomplete="email" aria-required="true">
-                    
+
+                    <!-- Message Field -->
                     <label for="message">Message:</label>
                     <textarea id="message" name="message" required minlength="10" maxlength="500" aria-required="true"></textarea>
-                    
-                    <!-- Honeypot field for bot protection -->
-                    <input type="text" name="_gotcha" style="display:none;" aria-hidden="true">
-                    
+
+                    <!-- Honeypot Field for Bot Protection
+                    <input type="text" name="_gotcha" style="display:none;" aria-hidden="true"> -->
+
+                    <!-- reCAPTCHA -->
+                    <div data-netlify-recaptcha="true"></div>
+
+                    <!-- Submit Button -->
                     <button type="submit" class="btn" aria-label="Send message">Send</button>
+
+                    <!-- Form Status Message -->
                     <p id="form-message" role="status"></p>
                 </form>
             </div>

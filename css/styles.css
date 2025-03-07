@@ -397,42 +397,32 @@ body.dark-mode .blog-post {
 }
 
 /* Social Links */
+/* Social Links Styles */
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    margin: 2rem 0;
+    gap: 20px; /* Space between icons */
+    margin: 20px 0;
 }
 
-.social-link {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    line-height: 60px;
-    font-size: 1.5rem;
-    color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.social-links a {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.social-link:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+.social-links a:hover {
+    transform: scale(1.2); /* Slightly enlarge icons on hover */
 }
 
-.social-link.linkedin {
-    background-color: #0077b5; /* LinkedIn blue */
+.social-links .linkedin i {
+    color: #0077B5; /* LinkedIn brand color */
+    font-size: 2rem; /* Icon size */
 }
 
-.social-link.github {
-    background-color: #333; /* GitHub black */
-}
-
-.social-link i {
-    vertical-align: middle;
+.social-links .github i {
+    color: #333; /* GitHub brand color */
+    font-size: 2rem; /* Icon size */
 }
 
 #contact-form label {
