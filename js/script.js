@@ -77,13 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
             contactForm.querySelector('button').disabled = true;
 
             // Submit to Netlify
-            const formData = new FormData(contactForm);
+            const formData = new URLSearchParams(new FormData(contactForm));
             const response = await fetch('/', {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'Accept': 'application/json'
-                }
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
             });
 
             if (response.ok) {
@@ -93,6 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 formMessage.textContent = 'Failed to send message. Please try again.';
                 formMessage.style.color = 'red';
+                console.error('Response status:', response.status);
+                console.error('Response text:', await response.text());
             }
         } catch (error) {
             formMessage.textContent = 'An error occurred. Please try again.';
