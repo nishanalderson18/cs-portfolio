@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('form-message');
     const successMessage = document.getElementById('success-message');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const githubIcon = document.querySelector('.social-links .github i'); // Select GitHub icon
 
     // Check for success parameter in URL and ONLY SHOW SUCCESS MESSAGE if it exists
     const urlParams = new URLSearchParams(window.location.search);
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDarkMode = document.body.classList.contains('dark-mode');
         localStorage.setItem('darkMode', isDarkMode);
         updateDarkModeToggleText(isDarkMode);
+        updateGitHubIconColor(isDarkMode); // Update GitHub icon color
     });
 
     // Initialize Dark Mode
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-mode');
     }
     updateDarkModeToggleText(savedDarkMode);
+    updateGitHubIconColor(savedDarkMode); // Initialize GitHub icon color
 
     // Update Dark Mode Toggle Text
     function updateDarkModeToggleText(isDarkMode) {
@@ -42,6 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const toggleText = darkModeToggle.querySelector('.toggle-text');
         toggleIcon.textContent = isDarkMode ? '☀️' : '🌙';
         toggleText.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+    }
+
+    // Update GitHub Icon Color
+    function updateGitHubIconColor(isDarkMode) {
+        if (githubIcon) {
+            githubIcon.style.color = isDarkMode ? '#f4f4f4' : '#333'; // Light color for dark mode, dark color for light mode
+        }
     }
 
     // Form Validation
