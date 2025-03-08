@@ -26,101 +26,61 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleText.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
     }
 
-    // Form Submission
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // Get form data
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-
-        // Reset message
-        formMessage.textContent = '';
-        formMessage.style.color = '';
-
-        // Client-side validation
-        try {
-            // Basic field presence
+    // Form Submission - IMPORTANT: Let Netlify handle the form submission natively
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            // Don't prevent default - let the form submit naturally
+            // e.preventDefault();
+            
+            // Get form data for validation only
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Reset message
+            formMessage.textContent = '';
+            formMessage.style.color = '';
+            
+            // Client-side validation
             if (!name || !email || !message) {
+                e.preventDefault();
                 formMessage.textContent = 'Please fill out all required fields.';
                 formMessage.style.color = 'red';
-                return;
+                return false;
             }
-
+            
             // Name validation
             const namePattern = /^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$/;
             if (!namePattern.test(name) || name.length < 2 || name.length > 50) {
+                e.preventDefault();
                 formMessage.textContent = 'Name must be 2-50 letters only (spaces allowed between names).';
                 formMessage.style.color = 'red';
-                return;
+                return false;
             }
-
+            
             // Email validation
             const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailPattern.test(email)) {
+                e.preventDefault();
                 formMessage.textContent = 'Please enter a valid email address.';
                 formMessage.style.color = 'red';
-                return;
+                return false;
             }
-
+            
             // Message length validation
             if (message.length < 10 || message.length > 500) {
+                e.preventDefault();
                 formMessage.textContent = 'Message must be 10-500 characters.';
                 formMessage.style.color = 'red';
-                return;
+                return false;
             }
-
-            // If validation passes, submit the form
+            
+            // If validation passes, show sending message but let form submit naturally
             formMessage.textContent = 'Sending...';
             formMessage.style.color = 'blue';
-            contactForm.querySelector('button').disabled = true;
-
-            // Add hidden Netlify form name field if it doesn't exist
-            if (!contactForm.querySelector('input[name="form-name"]')) {
-                const hiddenField = document.createElement('input');
-                hiddenField.setAttribute('type', 'hidden');
-                hiddenField.setAttribute('name', 'form-name');
-                hiddenField.setAttribute('value', 'contact');
-                contactForm.appendChild(hiddenField);
-            }
-
-            // Submit to Netlify
-            const formData = new FormData(contactForm);
-            const searchParams = new URLSearchParams();
             
-            // Explicitly add the form-name parameter
-            searchParams.append('form-name', 'contact');
-            
-            // Add all other form fields
-            for (const pair of formData) {
-                searchParams.append(pair[0], pair[1]);
-            }
-            
-            const response = await fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: searchParams.toString()
-            });
-
-            if (response.ok) {
-                formMessage.textContent = 'Message sent successfully!';
-                formMessage.style.color = 'green';
-                contactForm.reset();
-            } else {
-                formMessage.textContent = 'Failed to send message. Please try again.';
-                formMessage.style.color = 'red';
-                console.error('Response status:', response.status);
-                console.error('Response text:', await response.text());
-            }
-        } catch (error) {
-            formMessage.textContent = 'An error occurred. Please try again.';
-            formMessage.style.color = 'red';
-            console.error('Form submission error:', error);
-        } finally {
-            contactForm.querySelector('button').disabled = false;
-        }
-    });
+            // The form will submit naturally to Netlify
+            return true;
+        });
+    }
 });

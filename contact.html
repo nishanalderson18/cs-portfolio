@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Contact Me">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; form-action 'self' https://api.netlify.com;">
+    <!-- Modified CSP to allow Netlify submissions -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; form-action 'self' https://api.netlify.com https://*.netlify.app https://*.netlify.com;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <title>Contact Me</title>
@@ -47,10 +48,14 @@
                     </a>
                 </div>
 
-                <!-- Netlify Form - Fixed Version -->
-                <!-- Add the form action and fix form setup -->
-                <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true" action="/">
-                    <!-- Hidden input for Netlify form name - CRITICAL FIX -->
+                <!-- Netlify Form - Static version without JS handling -->
+                <form id="contact-form" name="contact" method="POST" netlify netlify-honeypot="bot-field">
+                    <!-- Bot field honeypot -->
+                    <p class="hidden" style="display: none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </p>
+                    
+                    <!-- Hidden input for Netlify form name -->
                     <input type="hidden" name="form-name" value="contact" />
                     
                     <!-- Name Field -->
@@ -64,9 +69,6 @@
                     <!-- Message Field -->
                     <label for="message">Message:</label>
                     <textarea id="message" name="message" required minlength="10" maxlength="500" aria-required="true"></textarea>
-
-                    <!-- reCAPTCHA -->
-                    <div data-netlify-recaptcha="true"></div>
 
                     <!-- Submit Button -->
                     <button type="submit" class="btn" aria-label="Send message">Send</button>
