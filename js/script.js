@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const successMessage = document.getElementById('success-message');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-    // Check for success parameter in URL
+    // Check for success parameter in URL and ONLY SHOW SUCCESS MESSAGE if it exists
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
         // Hide the form and show success message
@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (successMessage) {
             successMessage.scrollIntoView({ behavior: 'smooth' });
         }
+    } else {
+        // Make sure success message is hidden if no success parameter
+        if (successMessage) successMessage.style.display = 'none';
+        if (contactForm) contactForm.style.display = 'block';
     }
 
     // Dark Mode Toggle
