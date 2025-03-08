@@ -76,14 +76,33 @@ document.addEventListener('DOMContentLoaded', () => {
             formMessage.style.color = 'blue';
             contactForm.querySelector('button').disabled = true;
 
+            // Add hidden Netlify form name field if it doesn't exist
+            if (!contactForm.querySelector('input[name="form-name"]')) {
+                const hiddenField = document.createElement('input');
+                hiddenField.setAttribute('type', 'hidden');
+                hiddenField.setAttribute('name', 'form-name');
+                hiddenField.setAttribute('value', 'contact');
+                contactForm.appendChild(hiddenField);
+            }
+
             // Submit to Netlify
-            const formData = new URLSearchParams(new FormData(contactForm));
+            const formData = new FormData(contactForm);
+            const searchParams = new URLSearchParams();
+            
+            // Explicitly add the form-name parameter
+            searchParams.append('form-name', 'contact');
+            
+            // Add all other form fields
+            for (const pair of formData) {
+                searchParams.append(pair[0], pair[1]);
+            }
+            
             const response = await fetch('/', {
                 method: 'POST',
-                body: formData,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
+                body: searchParams.toString()
             });
 
             if (response.ok) {

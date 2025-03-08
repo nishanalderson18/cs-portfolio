@@ -42,13 +42,17 @@
                     <a href="https://www.linkedin.com/in/mohammad-s-7a3934236/" target="_blank" rel="noopener noreferrer" class="social-link linkedin">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="https://github.com/nishanalderson18" target="_blank" rel="noopener noreferrer" class="social-link github">
+                    <a href="https://github.com/nishanlderson18" target="_blank" rel="noopener noreferrer" class="social-link github">
                         <i class="fab fa-github"></i>
                     </a>
                 </div>
 
-                <!-- Netlify Form -->
-                <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+                <!-- Netlify Form - Fixed Version -->
+                <!-- Add the form action and fix form setup -->
+                <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true" action="/">
+                    <!-- Hidden input for Netlify form name - CRITICAL FIX -->
+                    <input type="hidden" name="form-name" value="contact" />
+                    
                     <!-- Name Field -->
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required minlength="2" maxlength="50" autocomplete="name" aria-required="true">
