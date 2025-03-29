@@ -8,7 +8,7 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    min-height: 100vh;
 }
 
 header {
@@ -19,8 +19,8 @@ header {
 }
 
 main {
-    flex: 1; /* Allow the main content to grow and push the footer down */
-    padding: 2rem; /* Add padding to the main content */
+    flex: 1;
+    padding: 2rem;
 }
 
 footer {
@@ -28,7 +28,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem 0;
-    margin-top: auto; /* Push the footer to the bottom */
+    margin-top: auto;
 }
 
 nav {
@@ -58,10 +58,10 @@ nav {
 }
 
 .nav-links li a:hover {
-    color: #ff6347; /* Tomato color */
+    color: #ff6347;
 }
 
-/* Dark mode styles */
+/* Dark Mode Styles */
 body.dark-mode {
     background-color: #333;
     color: #f4f4f4;
@@ -163,7 +163,7 @@ body.dark-mode .blog-post {
 }
 
 .hero-content .btn:hover {
-    background: #ff4500; /* OrangeRed color */
+    background: #ff4500;
 }
 
 /* Skills Section */
@@ -342,6 +342,124 @@ body.dark-mode .blog-post {
     text-decoration: underline;
 }
 
+/* Technology and Tools Section */
+.tech-tools-section {
+    margin-bottom: 3rem;
+}
+
+.tech-tools-section h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.tech-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tech-tool-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tech-tool-card:hover {
+    transform: translateY(-10px);
+}
+
+.tech-tool-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #ff6347;
+}
+
+.tech-tool-card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.tech-tool-card .proficiency {
+    font-weight: bold;
+    color: #ff6347;
+}
+
+/* Languages Section */
+.languages-section {
+    margin-bottom: 3rem;
+}
+
+.languages-section h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.languages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.language-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.language-card:hover {
+    transform: translateY(-10px);
+}
+
+.language-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #ff6347;
+}
+
+.language-card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.language-card .proficiency {
+    font-weight: bold;
+    color: #ff6347;
+}
+
+/* Dark Mode Adjustments */
+body.dark-mode .tech-tool-card,
+body.dark-mode .language-card {
+    background-color: #444;
+    color: #f4f4f4;
+}
+
+body.dark-mode .tech-tool-card h4,
+body.dark-mode .language-card h4 {
+    color: #ff6347;
+}
+
+body.dark-mode .tech-tool-card p,
+body.dark-mode .language-card p {
+    color: #f4f4f4;
+}
+
+body.dark-mode .tech-tool-card .proficiency,
+body.dark-mode .language-card .proficiency {
+    color: #ff6347;
+}
+
 /* Contact Section */
 .contact {
     padding: 4rem 2rem;
@@ -374,40 +492,8 @@ body.dark-mode .blog-post {
     transition: background 0.3s ease;
 }
 
-
-/* Social Links */
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Space between icons */
-    margin: 20px 0;
-}
-
-.social-links a {
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.social-links a:hover {
-    transform: scale(1.2); /* Slightly enlarge icons on hover */
-}
-
-/* LinkedIn Icon */
-.social-links .linkedin i {
-    color: #0077B5; /* LinkedIn brand color */
-    font-size: 2rem; /* Icon size */
-}
-
-/* GitHub Icon */
-.social-links .github i {
-    color: #333; /* Default color for light mode */
-    font-size: 2rem;
-}
-
-/* Dark mode styles for GitHub icon */
-body.dark-mode .social-links .github i {
-    color: #f4f4f4; /* Light color for dark mode */
+.social-links .btn:hover {
+    background: #005f8b;
 }
 
 #contact-form label {
